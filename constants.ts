@@ -9,67 +9,67 @@ export const SKILLS: Skill[] = [
     name: 'JavaScript', 
     level: 5, 
     category: 'language',
-    description: "The fundamental scripting language of the web, enabling dynamic content and interactive user experiences. I utilize modern ES6+ syntax to build responsive front-end interfaces, manage complex state logic within web applications, and create seamless, event-driven interactions. It serves as the backbone for my work with frameworks like React and environments like Node.js."
+    description: "My daily driver. I use it for everything from interactive front-ends to complex logic. It's the language I'm most comfortable thinking in."
   },
   { 
     name: 'Java', 
     level: 5, 
     category: 'language',
-    description: "A high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible. I leverage Java for robust backend systems, Android app development, and large-scale enterprise solutions where strict typing and performance are paramount. It allows for building scalable, maintainable, and secure applications."
+    description: "My go-to for heavy lifting. When performance and strict structure matter, I switch to Java. I've used it for backend systems and Android dev."
   },
   { 
     name: 'Python', 
     level: 5, 
     category: 'language',
-    description: "A powerful, high-level programming language known for its readability and versatility. My expertise includes using Python for backend development with frameworks like Django or Flask, automating repetitive tasks through scripting, and performing complex data analysis. It is my go-to tool for rapid prototyping and solving algorithmic problems efficiently."
+    description: "I use Python when I need to build backends fast (Flask/Django) or automate boring tasks. It's clean, readable, and gets the job done."
   },
   { 
     name: 'Node.js', 
     level: 5, 
     category: 'framework',
-    description: "A runtime environment that executes JavaScript code outside a web browser, allowing for server-side development. I use Node.js to build fast, scalable network applications and RESTful APIs. Its non-blocking, event-driven architecture makes it ideal for real-time data-intensive applications that run across distributed devices."
+    description: "Allows me to use my JS skills on the server. I use Node to build fast APIs and real-time apps without context-switching languages."
   },
   { 
     name: 'HTML', 
     level: 4, 
     category: 'language',
-    description: "HyperText Markup Language is the standard markup language for documents designed to be displayed in a web browser. I craft semantic, accessible, and SEO-friendly HTML structures that serve as the solid foundation for all my web projects, ensuring that content is logically organized and universally accessible across different devices and screen readers."
+    description: "The skeleton of the web. I write clean, semantic markup so search engines and screen readers actually understand what's on the page."
   },
   { 
     name: 'CSS', 
     level: 4, 
     category: 'language',
-    description: "Cascading Style Sheets used for describing the presentation of a document written in HTML. I specialize in modern CSS techniques, including Flexbox, Grid, and complex animations, to create visually stunning and responsive designs. I also utilize preprocessors and frameworks like Tailwind CSS to streamline styling workflows and ensure design consistency."
+    description: "I actually enjoy CSS. I use it to make things look expensive—animations, responsive layouts, and modern effects (like this site)."
   },
   { 
     name: 'Luau', 
     level: 4, 
     category: 'language',
-    description: "A derivative of Lua 5.1, specifically optimized for the Roblox platform. I have extensive experience using Luau to script complex game mechanics, manage server-client replication, and create immersive interactive experiences within Roblox. It allows me to bring game concepts to life with high performance and reliability."
+    description: "Specific to Roblox development. I use this to script game mechanics and server-side logic for game commissions."
   },
   { 
     name: 'C#', 
     level: 4, 
     category: 'language',
-    description: "A modern, object-oriented programming language developed by Microsoft. It is a primary tool in my arsenal for game development using the Unity engine, as well as for building Windows desktop applications. C# provides a balance of high performance and developer productivity, making it excellent for simulation and interactive media."
+    description: "Mainly for Unity game dev. It's great for object-oriented game structures and building tools."
   },
   { 
     name: 'C++', 
     level: 4, 
     category: 'language',
-    description: "A high-performance programming language that provides a high level of control over system resources and memory. I use C++ for systems programming, developing game engines, and performance-critical applications where efficiency is non-negotiable. It deepens my understanding of how software interacts with hardware."
+    description: "For when I need raw control over memory and hardware. It's tough, but essential for understanding how engines work under the hood."
   },
   { 
     name: 'React', 
     level: 3, 
     category: 'framework',
-    description: "A JavaScript library for building user interfaces based on components. I use React to build single-page applications that offer a smooth, app-like user experience. By creating reusable UI components and managing application state effectively, I can develop complex front-end interfaces that are easy to maintain and scale."
+    description: "My component library of choice. It makes building complex UIs (like this portfolio) manageable and modular."
   },
   { 
     name: 'TypeScript', 
     level: 3, 
     category: 'language',
-    description: "A strict syntactical superset of JavaScript that adds optional static typing. I adopt TypeScript in larger projects to catch errors early during development, improve code readability, and enhance tooling support. It ensures that my codebases remain robust and maintainable as they grow in complexity."
+    description: "JavaScript, but with safety rails. I'm using this more and more to catch bugs before they happen, especially on larger team projects."
   },
 ];
 
@@ -79,7 +79,7 @@ export const COMPLETED_PROJECTS: Project[] = [
   {
     id: '3',
     title: 'UI for Anthropic',
-    description: 'A UI change for Anthropic for a small update.',
+    description: 'Executed a targeted UI refresh for Anthropic, focusing on component consistency and visual hierarchy updates.',
     completion: 100,
     tags: ['UI/UX', 'Frontend', 'Design'],
     link: 'https://www.anthropic.com',
@@ -105,7 +105,7 @@ export const PRICING: PricingPlan[] = [
       'Game Scripting ($50): Code commission, easy integration, 1 week support',
       'Code Support: Free 1st time, then $25',
       'Fast Responses & Quick Coding',
-      'Easy to read code'
+      'Clean, commented code'
     ]
   },
   {
@@ -130,8 +130,8 @@ export const GOOGLE_FORM_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSeRg2Z
 
 export const SECTION_DESCRIPTIONS = {
   PROJECTS: "Projects im currently working on, if any",
-  LANGUAGES: "Proficiency levels in various syntax and frameworks.",
-  COMPLETED: "Successfully deployed and operational units.",
-  PRICES: "Standard Rates for my services",
-  RATE: "Feedback helps optimize future performance."
+  LANGUAGES: "My stack and proficiency levels.",
+  COMPLETED: "Things I've shipped.",
+  PRICES: "Standard rates.",
+  RATE: "Feedback helps me get better."
 };

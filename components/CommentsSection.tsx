@@ -1,58 +1,88 @@
 import React, { useState, useEffect } from 'react';
 import { Comment } from '../types';
-import { MessageSquare, Send } from 'lucide-react';
+import { MessageSquare, Send, Database, WifiOff, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { commentService } from '../services/commentService';
+import { isSupabaseConnected } from '../lib/supabase';
 
 const CommentsSection: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [authorName, setAuthorName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isConfigured, setIsConfigured] = useState(false);
 
   useEffect(() => {
-    const loadComments = () => {
-      const savedComments = localStorage.getItem('portfolio_comments');
-      if (savedComments) {
-        setComments(JSON.parse(savedComments));
-      }
-    };
-
+    setIsConfigured(isSupabaseConnected());
     loadComments();
 
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'portfolio_comments') {
-        loadComments();
-      }
-    };
-
+    // Listen for local storage changes (needed for fallback mode)
+    const handleStorageChange = () => loadComments();
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const loadComments = async () => {
+    setIsLoading(true);
+    try {
+      const data = await commentService.getComments();
+      setComments(data);
+    } catch (error) {
+      console.error("Failed to load comments", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newComment.trim() || !authorName.trim()) return;
 
-    const comment: Comment = {
-      id: Date.now().toString(),
-      author: authorName,
-      text: newComment,
-      date: new Date().toLocaleDateString()
-    };
-
-    const updated = [comment, ...comments];
-    setComments(updated);
-    localStorage.setItem('portfolio_comments', JSON.stringify(updated));
-    setNewComment('');
+    setIsLoading(true);
+    try {
+      // Service handles fallback internally now
+      const savedComment = await commentService.addComment(authorName, newComment);
+      
+      // Optimistic update / Refresh
+      setComments(prev => {
+        // Avoid duplicates if using local storage event
+        if (prev.some(c => c.id === savedComment.id)) return prev;
+        return [savedComment, ...prev];
+      });
+      
+      setNewComment('');
+    } catch (error) {
+      console.error("Failed to post comment", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="border border-neon-green/20 bg-[#050a10] p-6 rounded-lg relative overflow-hidden group shadow-[0_0_20px_rgba(0,255,65,0.05)] hover:shadow-[0_0_25px_rgba(0,255,65,0.1)] transition-shadow duration-500">
       
-      <div className="flex items-center gap-3 mb-6">
-        <MessageSquare className="text-neon-green w-6 h-6" />
-        <h3 className="text-2xl font-display font-bold text-white tracking-wider">
-          Comments
-        </h3>
+      <div className="flex justify-between items-start mb-6">
+        <div className="flex items-center gap-3">
+          <MessageSquare className="text-neon-green w-6 h-6" />
+          <h3 className="text-2xl font-display font-bold text-white tracking-wider">
+            Guestbook
+          </h3>
+        </div>
+        
+        {/* Status Indicator */}
+        <div className={`flex items-center gap-2 text-[10px] font-mono border px-2 py-1 rounded-full ${isConfigured ? 'border-neon-green/30 text-neon-green bg-neon-green/5' : 'border-gray-500/30 text-gray-500 bg-gray-500/5'}`}>
+          {isConfigured ? (
+            <>
+              <Database className="w-3 h-3" />
+              <span>CONNECTED</span>
+            </>
+          ) : (
+            <>
+              <WifiOff className="w-3 h-3" />
+              <span>LOCAL</span>
+            </>
+          )}
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="mb-8 space-y-4">
@@ -62,7 +92,8 @@ const CommentsSection: React.FC = () => {
             placeholder="Name"
             value={authorName}
             onChange={(e) => setAuthorName(e.target.value)}
-            className="w-full bg-neon-dark border border-gray-800 text-white p-3 rounded focus:outline-none focus:border-neon-green/50 focus:shadow-[0_0_10px_rgba(0,255,65,0.1)] transition-all font-sans"
+            disabled={isLoading}
+            className="w-full bg-neon-dark border border-gray-800 text-white p-3 rounded focus:outline-none focus:border-neon-green/50 focus:shadow-[0_0_10px_rgba(0,255,65,0.1)] transition-all font-sans disabled:opacity-50"
           />
         </div>
         <div>
@@ -70,27 +101,33 @@ const CommentsSection: React.FC = () => {
             placeholder="Write a message..."
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
+            disabled={isLoading}
             rows={3}
-            className="w-full bg-neon-dark border border-gray-800 text-white p-3 rounded focus:outline-none focus:border-neon-green/50 focus:shadow-[0_0_10px_rgba(0,255,65,0.1)] transition-all font-sans resize-none"
+            className="w-full bg-neon-dark border border-gray-800 text-white p-3 rounded focus:outline-none focus:border-neon-green/50 focus:shadow-[0_0_10px_rgba(0,255,65,0.1)] transition-all font-sans resize-none disabled:opacity-50"
           />
         </div>
         <motion.button
           type="submit"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-2 bg-neon-green text-black px-8 py-2 rounded font-display font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(0,255,65,0.3)] hover:bg-white transition-colors duration-300"
+          disabled={isLoading}
+          className="flex items-center gap-2 bg-neon-green text-black px-8 py-2 rounded font-display font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(0,255,65,0.3)] hover:bg-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Send className="w-4 h-4" />
-          Send
+          {isLoading ? (
+            <span className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></span>
+          ) : (
+            <Send className="w-4 h-4" />
+          )}
+          {isLoading ? 'Posting...' : 'Sign Guestbook'}
         </motion.button>
       </form>
 
       <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-        {comments.length === 0 && (
-          <div className="text-gray-500 text-center italic text-sm py-4">No comments yet. Be the first to verify this sector.</div>
+        {comments.length === 0 && !isLoading && (
+          <div className="text-gray-500 text-center italic text-sm py-4">No signatures yet. Be the first.</div>
         )}
         {comments.map((comment) => (
-          <div key={comment.id} className="border-l-2 border-gray-800 pl-4 py-2 hover:border-neon-green transition-colors">
+          <div key={comment.id} className="border-l-2 border-gray-800 pl-4 py-2 hover:border-neon-green transition-colors animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="flex justify-between items-baseline mb-1">
               <span className="font-display font-bold text-neon-green text-sm">{comment.author}</span>
               <span className="text-gray-500 text-xs font-mono">{comment.date}</span>
