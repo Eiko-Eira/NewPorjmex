@@ -2,7 +2,7 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-  completion: number; // 0-100
+  completion: number;
   tags: string[];
   link?: string;
   image?: string;
@@ -10,9 +10,9 @@ export interface Project {
 
 export interface Skill {
   name: string;
-  level: number; // 1-5
+  level: number;
   category: 'language' | 'tool' | 'framework';
-  description?: string; // Details shown in popup
+  description?: string;
 }
 
 export interface Comment {

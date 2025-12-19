@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Comment } from '../types';
-import { MessageSquare, Send, Database, WifiOff, AlertCircle } from 'lucide-react';
+import { MessageSquare, Send, Database, WifiOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { commentService } from '../services/commentService';
 import { isSupabaseConnected } from '../lib/supabase';
@@ -16,7 +16,6 @@ const CommentsSection: React.FC = () => {
     setIsConfigured(isSupabaseConnected());
     loadComments();
 
-    // Listen for local storage changes (needed for fallback mode)
     const handleStorageChange = () => loadComments();
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
@@ -28,7 +27,7 @@ const CommentsSection: React.FC = () => {
       const data = await commentService.getComments();
       setComments(data);
     } catch (error) {
-      console.error("Failed to load comments", error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -40,19 +39,16 @@ const CommentsSection: React.FC = () => {
 
     setIsLoading(true);
     try {
-      // Service handles fallback internally now
       const savedComment = await commentService.addComment(authorName, newComment);
       
-      // Optimistic update / Refresh
       setComments(prev => {
-        // Avoid duplicates if using local storage event
         if (prev.some(c => c.id === savedComment.id)) return prev;
         return [savedComment, ...prev];
       });
       
       setNewComment('');
     } catch (error) {
-      console.error("Failed to post comment", error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -69,7 +65,6 @@ const CommentsSection: React.FC = () => {
           </h3>
         </div>
         
-        {/* Status Indicator */}
         <div className={`flex items-center gap-2 text-[10px] font-mono border px-2 py-1 rounded-full ${isConfigured ? 'border-neon-green/30 text-neon-green bg-neon-green/5' : 'border-gray-500/30 text-gray-500 bg-gray-500/5'}`}>
           {isConfigured ? (
             <>
