@@ -55,17 +55,17 @@ const CommentsSection: React.FC = () => {
   };
 
   return (
-    <div className="border border-neon-green/20 bg-[#050a10] p-6 rounded-lg relative overflow-hidden group shadow-[0_0_20px_rgba(0,255,65,0.05)] hover:shadow-[0_0_25px_rgba(0,255,65,0.1)] transition-shadow duration-500">
+    <div className="border border-neon-blue/20 bg-neon-bg p-6 rounded-lg relative overflow-hidden group shadow-[0_0_20px_rgba(0,243,255,0.05)] hover:shadow-[0_0_25px_rgba(0,243,255,0.1)] transition-shadow duration-500">
       
       <div className="flex justify-between items-start mb-6">
         <div className="flex items-center gap-3">
-          <MessageSquare className="text-neon-green w-6 h-6" />
+          <MessageSquare className="text-neon-blue w-6 h-6" />
           <h3 className="text-2xl font-display font-bold text-white tracking-wider">
             Guestbook
           </h3>
         </div>
         
-        <div className={`flex items-center gap-2 text-[10px] font-mono border px-2 py-1 rounded-full ${isConfigured ? 'border-neon-green/30 text-neon-green bg-neon-green/5' : 'border-gray-500/30 text-gray-500 bg-gray-500/5'}`}>
+        <div className={`flex items-center gap-2 text-[10px] font-mono border px-2 py-1 rounded-full ${isConfigured ? 'border-neon-blue/30 text-neon-blue bg-neon-blue/5' : 'border-gray-500/30 text-gray-500 bg-gray-500/5'}`}>
           {isConfigured ? (
             <>
               <Database className="w-3 h-3" />
@@ -88,7 +88,7 @@ const CommentsSection: React.FC = () => {
             value={authorName}
             onChange={(e) => setAuthorName(e.target.value)}
             disabled={isLoading}
-            className="w-full bg-neon-dark border border-gray-800 text-white p-3 rounded focus:outline-none focus:border-neon-green/50 focus:shadow-[0_0_10px_rgba(0,255,65,0.1)] transition-all font-sans disabled:opacity-50"
+            className="w-full bg-neon-dark border border-gray-800 text-white p-3 rounded focus:outline-none focus:border-neon-blue/50 focus:shadow-[0_0_10px_rgba(0,243,255,0.1)] transition-all font-sans disabled:opacity-50"
           />
         </div>
         <div>
@@ -98,7 +98,7 @@ const CommentsSection: React.FC = () => {
             onChange={(e) => setNewComment(e.target.value)}
             disabled={isLoading}
             rows={3}
-            className="w-full bg-neon-dark border border-gray-800 text-white p-3 rounded focus:outline-none focus:border-neon-green/50 focus:shadow-[0_0_10px_rgba(0,255,65,0.1)] transition-all font-sans resize-none disabled:opacity-50"
+            className="w-full bg-neon-dark border border-gray-800 text-white p-3 rounded focus:outline-none focus:border-neon-blue/50 focus:shadow-[0_0_10px_rgba(0,243,255,0.1)] transition-all font-sans resize-none disabled:opacity-50"
           />
         </div>
         <motion.button
@@ -106,7 +106,7 @@ const CommentsSection: React.FC = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           disabled={isLoading}
-          className="flex items-center gap-2 bg-neon-green text-black px-8 py-2 rounded font-display font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(0,255,65,0.3)] hover:bg-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-2 bg-neon-blue text-black px-8 py-2 rounded font-display font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(0,243,255,0.3)] hover:bg-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? (
             <span className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></span>
@@ -122,13 +122,18 @@ const CommentsSection: React.FC = () => {
           <div className="text-gray-500 text-center italic text-sm py-4">No signatures yet. Be the first.</div>
         )}
         {comments.map((comment) => (
-          <div key={comment.id} className="border-l-2 border-gray-800 pl-4 py-2 hover:border-neon-green transition-colors animate-in fade-in slide-in-from-bottom-2 duration-300">
-            <div className="flex justify-between items-baseline mb-1">
-              <span className="font-display font-bold text-neon-green text-sm">{comment.author}</span>
-              <span className="text-gray-500 text-xs font-mono">{comment.date}</span>
+          <motion.div 
+            key={comment.id} 
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="bg-[#0a1018] p-4 rounded border border-gray-800"
+          >
+            <div className="flex justify-between items-start mb-2">
+              <span className="font-bold text-neon-blue font-display text-sm">{comment.author}</span>
+              <span className="text-[10px] text-gray-600 font-mono">{comment.date}</span>
             </div>
-            <p className="text-gray-300 font-light text-sm leading-relaxed">{comment.text}</p>
-          </div>
+            <p className="text-gray-300 text-sm font-light leading-relaxed">{comment.text}</p>
+          </motion.div>
         ))}
       </div>
     </div>

@@ -73,17 +73,63 @@ export const SKILLS: Skill[] = [
   },
 ];
 
-export const CURRENT_PROJECTS: Project[] = [];
+export const CURRENT_PROJECTS: Project[] = [
+  {
+    id: 'cp-1',
+    title: 'Personal Portfolio',
+    description: '',
+    completion: 98,
+    tags: ['React', 'TypeScript', 'Tailwind'],
+    link: '#',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1000'
+  },
+  {
+    id: 'cp-2',
+    title: 'pump.fun',
+    description: 'Developing tools and UI enhancements for the popular Solana memecoin launchpad.',
+    completion: 65,
+    tags: ['Web3', 'Solana', 'Rust'],
+    link: 'https://pump.fun',
+    image: 'https://pbs.twimg.com/profile_images/1745549862146961408/7X2w6k5A_400x400.jpg'
+  }
+];
 
 export const COMPLETED_PROJECTS: Project[] = [
   {
     id: '3',
     title: 'UI for Anthropic',
-    description: 'Executed a targeted UI refresh for Anthropic, focusing on component consistency and visual hierarchy updates.',
+    description: '',
     completion: 100,
     tags: ['UI/UX', 'Frontend', 'Design'],
     link: 'https://www.anthropic.com',
     image: 'https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg'
+  },
+  {
+    id: '10',
+    title: 'Amazon AWS',
+    description: '',
+    completion: 100,
+    tags: ['Enterprise', 'Cloud', 'Complex UI'],
+    link: 'https://aws.amazon.com',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg'
+  },
+  {
+    id: '12',
+    title: 'pump.fun Terminal UI',
+    description: '',
+    completion: 100,
+    tags: ['CLI', 'Rust', 'UI/UX'],
+    link: 'https://pump.fun',
+    image: 'https://pbs.twimg.com/profile_images/1745549862146961408/7X2w6k5A_400x400.jpg'
+  },
+  {
+    id: '11',
+    title: 'Wikipedia',
+    description: '',
+    completion: 100,
+    tags: ['Accessibility', 'Typography', 'Content'],
+    link: 'https://wikipedia.org',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/8/80/Wikipedia-logo-v2.svg'
   }
 ];
 
@@ -129,9 +175,9 @@ export const QUOTES = [
 export const GOOGLE_FORM_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSeRg2Z5sT1pj7R3oVaR4I--Svq1j79KdLvOmVwX2PRQmzLVHA/viewform?usp=dialog";
 
 export const SECTION_DESCRIPTIONS = {
-  PROJECTS: "Projects im currently working on, if any",
-  LANGUAGES: "My stack and proficiency levels.",
-  COMPLETED: "Things I've shipped.",
-  PRICES: "Standard rates.",
-  RATE: "Feedback helps me get better."
+  PROJECTS: "",
+  LANGUAGES: "",
+  COMPLETED: "",
+  PRICES: "",
+  RATE: ""
 };
